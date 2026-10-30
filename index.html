@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#123d2b">
+    <title>FNEA | منصة العضوية الرقمية</title>
+    <meta name="description" content="منصة العضوية الرقمية للمنتدى الوطني للطلبة الجزائريين">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-content">
+        <a href="#home" class="brand">
+            <span class="brand-logo">FNEA</span>
+            <span class="brand-text">
+                <strong>المنتدى الوطني</strong>
+                <small>للطلبة الجزائريين</small>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="التنقل الرئيسي">
+            <a href="#home">الرئيسية</a>
+            <a href="#about">عن المنتدى</a>
+            <a href="#membership">التسجيل</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="eyebrow">منصة العضوية الرقمية</span>
+                <h1>معًا من أجل<br><span>طالب فاعل</span> ومستقبل أفضل</h1>
+                <p>
+                    فضاء رقمي لتقديم طلبات الانخراط في المنتدى الوطني
+                    للطلبة الجزائريين ومتابعتها بعد مراجعتها من طرف الإدارة.
+                </p>
+                <a href="#membership" class="btn btn-gold">تقديم طلب الانخراط</a>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-emblem">FNEA</div>
+                <h2>صوت الطالب، قوة المستقبل</h2>
+                <p>
+                    تنظيم طلابي مسؤول وفاعل، قريب من انشغالات الطلبة
+                    وتطلعاتهم.
+                </p>
+                <div class="gold-line"></div>
+                <span>المنتدى الوطني للطلبة الجزائريين</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-heading">
+                <span class="eyebrow">عن المنصة</span>
+                <h2>خدمات رقمية للطالب</h2>
+                <p>
+                    تقديم الطلب إلكترونيًا، مراجعة المعلومات من طرف الإدارة،
+                    ثم استكمال إجراءات اعتماد العضوية.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <article class="feature-card">
+                    <span class="feature-number">01</span>
+                    <h3>تقديم الطلب</h3>
+                    <p>إدخال المعلومات الشخصية والجامعية المطلوبة.</p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">02</span>
+                    <h3>مراجعة الإدارة</h3>
+                    <p>التحقق من المعلومات واتخاذ القرار بشأن الطلب.</p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">03</span>
+                    <h3>اعتماد العضوية</h3>
+                    <p>بعد القبول، استكمال إجراءات إصدار استمارة الانخراط.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-tint" id="membership">
+        <div class="container">
+            <div class="section-heading">
+                <span class="eyebrow">الانخراط</span>
+                <h2>طلب انخراط جديد</h2>
+                <p>
+                    املأ المعلومات بدقة. يُرسل الطلب للمراجعة، ولا تُعتمد
+                    العضوية إلا بعد موافقة الإدارة.
+                </p>
+            </div>
+
+            <div class="form-card">
+                <div class="notice-box">
+                    <strong>ملاحظة:</strong>
+                    لا تحتاج إلى إنشاء حساب. أرسل الاستمارة مباشرة، وستراجع
+                    الإدارة طلبك. الحقول التي تحمل (*) إجبارية.
+                </div>
+
+                <form id="membership-form" novalidate>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="full_name">الاسم واللقب *</label>
+                            <input id="full_name" name="full_name" type="text"
+                                   autocomplete="name" maxlength="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">البريد الإلكتروني *</label>
+                            <input id="email" name="email" type="email"
+                                   autocomplete="email" maxlength="120" dir="ltr" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wilaya">الولاية *</label>
+                            <select id="wilaya" name="wilaya" required>
+                                <option value="">اختر الولاية</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف</label>
+                            <input id="phone" name="phone" type="tel" inputmode="tel"
+                                   autocomplete="tel" maxlength="20" dir="ltr"
+                                   placeholder="0550123456">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="university">الجامعة</label>
+                            <input id="university" name="university" type="text" maxlength="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faculty">الكلية أو المعهد</label>
+                            <input id="faculty" name="faculty" type="text" maxlength="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="degree">التخصص أو الشهادة</label>
+                            <input id="degree" name="degree" type="text" maxlength="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="academic_year">السنة الجامعية</label>
+                            <select id="academic_year" name="academic_year">
+                                <option value="">اختر السنة</option>
+                                <option>السنة الأولى</option>
+                                <option>السنة الثانية</option>
+                                <option>السنة الثالثة</option>
+                                <option>السنة الرابعة</option>
+                                <option>السنة الخامسة</option>
+                                <option>ماستر 1</option>
+                                <option>ماستر 2</option>
+                                <option>دكتوراه</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="student_message">ملاحظات إضافية</label>
+                            <textarea id="student_message" name="student_message"
+                                      rows="4" maxlength="1000"></textarea>
+                        </div>
+
+                        <!-- حقل مخفي لصد الروبوتات: لا تحذفه -->
+                        <div class="hp" aria-hidden="true">
+                            <label for="website">اترك هذا الحقل فارغًا</label>
+                            <input id="website" name="website" type="text"
+                                   tabindex="-1" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-application" class="btn btn-green submit-button">
+                        إرسال طلب الانخراط
+                    </button>
+                </form>
+
+                <p id="form-message" class="message" role="status" aria-live="polite"></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-content">
+        <div>
+            <strong>FNEA</strong>
+            <p>المنتدى الوطني للطلبة الجزائريين</p>
+        </div>
+        <p>جميع الحقوق محفوظة © <span id="current-year"></span></p>
+    </div>
+</footer>
+
+<script src="./js/app.js"></script>
+</body>
+</html>
