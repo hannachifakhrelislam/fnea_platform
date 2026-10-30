@@ -296,10 +296,13 @@ button, input, select, textarea { font: inherit; }
 /* حقل صد الروبوتات: مخفي عن الزوار */
 .hp {
     position: absolute;
-    left: -9999px;
+    left: 0;
+    top: 0;
     width: 1px;
     height: 1px;
+    opacity: 0;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .submit-button { width: 100%; margin-top: 25px; }
