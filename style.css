@@ -67,6 +67,11 @@ button, input, select, textarea { font: inherit; }
     font-weight: 800;
     font-size: 15px;
 }
+img.brand-logo {
+    background: none;
+    border-radius: 50%;
+    object-fit: contain;
+}
 
 .brand-text { display: flex; flex-direction: column; line-height: 1.6; }
 .brand-text strong { color: var(--green); font-size: 16px; }
