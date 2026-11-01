@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#123d2b">
+    <meta name="theme-color" content="#030014">
     <title>FNEA | منصة العضوية الرقمية</title>
     <meta name="description" content="منصة العضوية الرقمية للمنتدى الوطني للطلبة الجزائريين">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Readex+Pro:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="./favicon.png">
 </head>
 <body>
 
 <header class="site-header">
-    <div class="container header-content">
-       <img src="./logo.png" alt="شعار المنتدى الوطني للطلبة الجزائريين" class="brand-logo" width="54" height="54">
+    <div class="nav-pill">
+        <a href="#home" class="brand">
+            <img src="./logo.png" alt="شعار المنتدى الوطني للطلبة الجزائريين" class="brand-logo" width="40" height="40">
             <span class="brand-text">
                 <strong>المنتدى الوطني</strong>
                 <small>للطلبة الجزائريين</small>
@@ -23,86 +27,79 @@
         <nav class="main-nav" aria-label="التنقل الرئيسي">
             <a href="#home">الرئيسية</a>
             <a href="#about">عن المنتدى</a>
-            <a href="#membership">التسجيل</a>
+            <a href="#membership" class="btn btn-sm">التسجيل</a>
         </nav>
     </div>
 </header>
 
 <main>
     <section class="hero" id="home">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <span class="eyebrow">منصة العضوية الرقمية</span>
-                <h1>معًا من أجل<br><span>طالب فاعل</span> ومستقبل أفضل</h1>
-                <p>
-                    فضاء رقمي لتقديم طلبات الانخراط في المنتدى الوطني
-                    للطلبة الجزائريين ومتابعتها بعد مراجعتها من طرف الإدارة.
-                </p>
-                <a href="#membership" class="btn btn-gold">تقديم طلب الانخراط</a>
-            </div>
+        <div class="container">
+            <img src="./logo.png" alt="" class="hero-logo" width="96" height="96">
 
-            <div class="hero-card">
-                <div class="hero-emblem">FNEA</div>
-                <h2>صوت الطالب، قوة المستقبل</h2>
-                <p>
-                    تنظيم طلابي مسؤول وفاعل، قريب من انشغالات الطلبة
-                    وتطلعاتهم.
-                </p>
-                <div class="gold-line"></div>
-                <span>المنتدى الوطني للطلبة الجزائريين</span>
-            </div>
+            <span class="badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>
+                منصة العضوية الرقمية
+            </span>
+
+            <h1>معًا من أجل <span class="grad">طالب فاعل ومستقبل أفضل</span></h1>
+
+            <p class="hero-sub">
+                قدّم طلب الانخراط في المنتدى الوطني للطلبة الجزائريين من هاتفك،
+                وستراجعه الإدارة وتتواصل معك.
+            </p>
+
+            <a href="#membership" class="btn">تقديم طلب الانخراط</a>
         </div>
     </section>
+
+    <hr class="divider">
 
     <section class="section" id="about">
         <div class="container">
             <div class="section-heading">
-                <span class="eyebrow">عن المنصة</span>
-                <h2>خدمات رقمية للطالب</h2>
-                <p>
-                    تقديم الطلب إلكترونيًا، مراجعة المعلومات من طرف الإدارة،
-                    ثم استكمال إجراءات اعتماد العضوية.
-                </p>
+                <h2>كيف يتم الانخراط؟</h2>
+                <p>ثلاث خطوات، ولا تحتاج إلى إنشاء حساب.</p>
             </div>
 
-            <div class="features-grid">
-                <article class="feature-card">
-                    <span class="feature-number">01</span>
+            <div class="steps-grid">
+                <article class="step">
+                    <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 7.5 3 3"/></svg>
+                    <small>الخطوة 1</small>
                     <h3>تقديم الطلب</h3>
-                    <p>إدخال المعلومات الشخصية والجامعية المطلوبة.</p>
+                    <p>أدخل معلوماتك الشخصية والجامعية في الاستمارة.</p>
                 </article>
 
-                <article class="feature-card">
-                    <span class="feature-number">02</span>
+                <article class="step">
+                    <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+                    <small>الخطوة 2</small>
                     <h3>مراجعة الإدارة</h3>
-                    <p>التحقق من المعلومات واتخاذ القرار بشأن الطلب.</p>
+                    <p>تتحقق الإدارة من المعلومات وتقرر بشأن الطلب.</p>
                 </article>
 
-                <article class="feature-card">
-                    <span class="feature-number">03</span>
+                <article class="step">
+                    <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg>
+                    <small>الخطوة 3</small>
                     <h3>اعتماد العضوية</h3>
-                    <p>بعد القبول، استكمال إجراءات إصدار استمارة الانخراط.</p>
+                    <p>بعد القبول، تُستكمل إجراءات إصدار استمارة الانخراط.</p>
                 </article>
             </div>
         </div>
     </section>
 
-    <section class="section section-tint" id="membership">
+    <hr class="divider">
+
+    <section class="section" id="membership">
         <div class="container">
             <div class="section-heading">
-                <span class="eyebrow">الانخراط</span>
                 <h2>طلب انخراط جديد</h2>
-                <p>
-                    املأ المعلومات بدقة. يُرسل الطلب للمراجعة، ولا تُعتمد
-                    العضوية إلا بعد موافقة الإدارة.
-                </p>
+                <p>املأ المعلومات بدقة. لا تُعتمد العضوية إلا بعد موافقة الإدارة.</p>
             </div>
 
             <div class="form-card">
                 <div class="notice-box">
                     <strong>ملاحظة:</strong>
-                    لا تحتاج إلى إنشاء حساب. أرسل الاستمارة مباشرة، وستراجع
-                    الإدارة طلبك. الحقول التي تحمل (*) إجبارية.
+                    أرسل الاستمارة مباشرة وستراجع الإدارة طلبك. الحقول التي تحمل (*) إجبارية.
                 </div>
 
                 <form id="membership-form" novalidate>
@@ -135,12 +132,26 @@
 
                         <div class="form-group">
                             <label for="university">الجامعة</label>
-                            <input id="university" name="university" type="text" maxlength="120">
+                            <select id="university" name="university">
+                                <option selected>جامعة 8 ماي 1945 - قالمة</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="faculty">الكلية أو المعهد</label>
-                            <input id="faculty" name="faculty" type="text" maxlength="120">
+                            <select id="faculty" name="faculty">
+                                <option value="">اختر الكلية أو المعهد</option>
+                                <option>كلية العلوم والتكنولوجيا</option>
+                                <option>كلية الرياضيات والإعلام الآلي وعلوم المادة</option>
+                                <option>كلية الآداب واللغات</option>
+                                <option>كلية العلوم الطبيعية والحياة وعلوم الأرض والكون</option>
+                                <option>كلية العلوم الإنسانية والإجتماعية</option>
+                                <option>كلية العلوم الإقتصادية وعلوم التسيير</option>
+                                <option>كلية الحقوق والعلوم السياسية</option>
+                                <option>ملحقة الطب</option>
+                                <option>ملحقة المدرسة العليا للأساتذة</option>
+                                <option>معهد الإتصالات السلكية واللاسلكية</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -177,7 +188,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" id="submit-application" class="btn btn-green submit-button">
+                    <button type="submit" id="submit-application" class="btn submit-button">
                         إرسال طلب الانخراط
                     </button>
                 </form>
