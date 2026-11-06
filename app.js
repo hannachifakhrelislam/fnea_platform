@@ -1,151 +1,54 @@
-"use strict";
+// ضع هنا رابط Apps Script المنشور (Web app)
+const SCRIPT_URL="PUT_YOUR_APPS_SCRIPT_URL_HERE";
+const $=id=>document.getElementById(id), form=$("form");
+function logoFallback(img){const b=document.createElement("b");b.className="logo-fb";b.textContent="FNEA";img.replaceWith(b)}
+function fill(sel,items,first){sel.innerHTML=(first!==undefined?`<option value="${first[0]}">${first[1]}</option>`:"")+items.map(v=>`<option>${v}</option>`).join("")}
 
-// عنوان استقبال الطلبات.
-// محليًا مع server.py:  "/api/applications"
-// مع Google Sheets:     ضع رابط Apps Script الذي ينتهي بـ /exec
-const API_URL = "https://script.google.com/macros/s/AKfycbxRmgj2G2ToTLwQq0l6uy0Mm7PAufwFENbBWuA-t5NQej_c3fsuJHYqUS8drryPV1ZqSQ/exec";
-const IS_EXTERNAL_API = API_URL.startsWith("http");
-const REQUEST_TIMEOUT_MS = 15000;
+fill($("wilaya"),WILAYAS,["","اختر الولاية"]);
+fill($("faculty"),FACULTIES,["","اختر الكلية أو المعهد"]);
+fill($("residence"),RESIDENCES,["","غير مقيم في إقامة جامعية"]);
+fill($("bacYear"),Array.from({length:46},(_,i)=>2025-i),["","اختر السنة"]);
 
-const WILAYAS = [
-    "أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار",
-    "البليدة", "البويرة", "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر",
-    "الجلفة", "جيجل", "سطيف", "سعيدة", "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة",
-    "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة", "وهران", "البيض",
-    "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي",
-    "خنشلة", "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت",
-    "غرداية", "غليزان", "تيميمون", "برج باجي مختار", "أولاد جلال", "بني عباس",
-    "عين صالح", "عين قزام", "تقرت", "جانت", "المغير", "المنيعة", "أفلو", "بريكة",
-    "القنطرة", "بئر العاتر", "العريشة", "قصر الشلالة", "مسعد", "عين وسارة", "بوسعادة",
-    "الأبيض سيدي الشيخ", "القصر", "بني ونيف", "سيدي عيسى", "عين آزال",
-    "قصر البخاري", "العلمة", "بوقطب", "تلاغ"
-];
+$("wilaya").onchange=()=>{
+  const c=$("commune"),t=$("communeText"),list=COMMUNES[$("wilaya").value];
+  if(!$("wilaya").value){c.disabled=true;c.hidden=false;t.hidden=true;c.innerHTML='<option value="">اختر الولاية أولا</option>';return}
+  if(list){c.hidden=false;t.hidden=true;t.value="";c.disabled=false;fill(c,list,["","اختر البلدية"])}
+  else{c.hidden=true;c.value="";t.hidden=false}
+  refresh();
+};
+$("bacNumber").oninput=e=>{e.target.value=e.target.value.replace(/\D/g,"")};
+$("form").querySelector('[name=phone]').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,"")};
 
-document.addEventListener("DOMContentLoaded", () => {
-    fillWilayas();
-    document.getElementById("current-year").textContent = new Date().getFullYear();
-    initializeForm();
-});
-
-function fillWilayas() {
-    const select = document.getElementById("wilaya");
-    WILAYAS.forEach((name) => select.add(new Option(name, name)));
+const v=n=>(form.elements[n].value||"").trim();
+const commune=()=>v("birthCommune")||v("birthCommuneText");
+function required(){return["firstName","lastName","birthDate","phone","birthWilaya","faculty","major","bacYear","bacNumber"].map(v).concat(commune())}
+function refresh(){
+  $("c-name").textContent=(v("firstName")+" "+v("lastName")).trim()||"الاسم واللقب";
+  $("c-birth").textContent=v("birthDate")?new Date(v("birthDate")).toLocaleDateString("ar-DZ",{year:"numeric",month:"long",day:"numeric"}):"—";
+  $("c-place").textContent=[commune(),v("birthWilaya")].filter(Boolean).join("، ")||"—";
+  $("c-fac").textContent=v("faculty")||"—";
+  $("c-bac").textContent=[v("bacYear"),v("bacNumber")].filter(Boolean).join(" · ")||"—";
+  $("c-res").textContent=v("residence")||"غير مقيم";
+  const r=required(),p=Math.round(r.filter(Boolean).length/r.length*100);
+  $("bar").style.width=p+"%";$("pct").textContent="اكتمال الاستمارة "+p+"%";
 }
+form.addEventListener("input",refresh);form.addEventListener("change",refresh);
 
-// يحوّل +213 / 00213 إلى 0 ويحذف الفراغات والشرطات
-function normalizePhone(value) {
-    const digits = value.replace(/[\s\-.()]/g, "");
-    return digits.replace(/^(\+213|00213)/, "0");
-}
-
-function initializeForm() {
-    const form = document.getElementById("membership-form");
-    const message = document.getElementById("form-message");
-    const submitButton = document.getElementById("submit-application");
-    let isSending = false;
-
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (isSending) return;
-
-        clearInvalid(form);
-
-        // حقل الفخ: الروبوتات تملؤه، فنتجاهل الطلب بصمت
-        if (form.elements.website.value) {
-            form.reset();
-            showMessage(message, "تم تسجيل طلبك بنجاح.", "success");
-            return;
-        }
-
-        const phone = normalizePhone(form.elements.phone.value);
-        const problem = validate(form, phone);
-        if (problem) {
-            problem.field.classList.add("invalid");
-            problem.field.focus();
-            showMessage(message, problem.text, "error");
-            return;
-        }
-
-        const application = {
-            full_name: form.elements.full_name.value.trim(),
-            email: form.elements.email.value.trim(),
-            wilaya: form.elements.wilaya.value,
-            phone: phone || null,
-            university: form.elements.university.value.trim() || null,
-            faculty: form.elements.faculty.value.trim() || null,
-            degree: form.elements.degree.value.trim() || null,
-            academic_year: form.elements.academic_year.value || null,
-            student_message: form.elements.student_message.value.trim() || null
-        };
-
-        isSending = true;
-        setButtonBusy(submitButton, true, "جارٍ إرسال الطلب...");
-        showMessage(message, "", "");
-
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                // Apps Script لا يدعم preflight، لذا نرسل text/plain عند استعماله
-                headers: {
-                    "Content-Type": IS_EXTERNAL_API ? "text/plain;charset=utf-8" : "application/json"
-                },
-                body: JSON.stringify(application),
-                signal: controller.signal
-            });
-
-            const result = await response.json().catch(() => ({}));
-
-            if (!response.ok || result.ok === false) {
-                showMessage(message, result.error || "تعذر تسجيل الطلب. تحقق من المعلومات وحاول مجددًا.", "error");
-                return;
-            }
-
-            form.reset();
-            const suffix = result.id ? " رقم التسجيل: " + result.id : "";
-            showMessage(message, "تم تسجيل طلبك بنجاح." + suffix, "success");
-        } catch (error) {
-            console.error("Application error (هل server.py شغّال؟):", error);
-            showMessage(message, "تعذر الاتصال بالخادم. تحقق من الاتصال وحاول مجددًا بعد قليل.", "error");
-        } finally {
-            clearTimeout(timer);
-            isSending = false;
-            setButtonBusy(submitButton, false, "إرسال طلب الانخراط");
-        }
-    });
-}
-
-function validate(form, phone) {
-    const f = form.elements;
-
-    if (!f.full_name.value.trim()) {
-        return { field: f.full_name, text: "أدخل الاسم واللقب." };
-    }
-    if (!f.email.value.trim() || !f.email.checkValidity()) {
-        return { field: f.email, text: "أدخل بريدًا إلكترونيًا صحيحًا." };
-    }
-    if (!f.wilaya.value) {
-        return { field: f.wilaya, text: "اختر الولاية." };
-    }
-    if (phone && !/^0[567]\d{8}$/.test(phone)) {
-        return { field: f.phone, text: "رقم الهاتف غير صحيح. مثال: 0550123456" };
-    }
-    return null;
-}
-
-function clearInvalid(form) {
-    form.querySelectorAll(".invalid").forEach((el) => el.classList.remove("invalid"));
-}
-
-function setButtonBusy(button, isBusy, label) {
-    button.disabled = isBusy;
-    button.textContent = label;
-}
-
-function showMessage(element, text, type) {
-    if (!element) return;
-    element.textContent = text;
-    element.dataset.type = type;
-}
+form.onsubmit=async e=>{
+  e.preventDefault();
+  const msg=$("msg");msg.textContent="";
+  form.querySelectorAll(".bad").forEach(x=>x.classList.remove("bad"));
+  const bad=[];
+  ["firstName","lastName","birthDate","birthWilaya","faculty","major","bacYear","bacNumber"].forEach(n=>{if(!v(n))bad.push(form.elements[n])});
+  if(!commune())bad.push($("wilaya").value&&!COMMUNES[$("wilaya").value]?$("communeText"):$("commune"));
+  if(!/^0[567]\d{8}$/.test(v("phone")))bad.push(form.elements.phone);
+  if(v("email")&&!form.elements.email.checkValidity())bad.push(form.elements.email);
+  if(bad.length){bad.forEach(x=>x.classList.add("bad"));bad[0].focus();msg.textContent="تأكد من الخانات المحددة بالأحمر (الهاتف يبدأ بـ 05 أو 06 أو 07 ويتكون من 10 أرقام).";return}
+  const data={firstName:v("firstName"),lastName:v("lastName"),birthDate:v("birthDate"),birthWilaya:v("birthWilaya"),birthCommune:commune(),phone:v("phone"),email:v("email"),university:v("university"),faculty:v("faculty"),major:v("major"),bacYear:v("bacYear"),bacNumber:v("bacNumber"),residence:v("residence")||"غير مقيم"};
+  const btn=$("send");btn.disabled=true;btn.textContent="جار الإرسال…";
+  try{
+    await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+    $("done").hidden=false;
+  }catch(err){msg.textContent="تعذر الإرسال. تحقق من اتصالك وأعد المحاولة.";btn.disabled=false;btn.textContent="أرسل طلب الانخراط"}
+};
+refresh();
