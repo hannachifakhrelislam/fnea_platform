@@ -1,5 +1,5 @@
 // ضع هنا رابط Apps Script المنشور (Web app)
-const SCRIPT_URL="PUT_YOUR_APPS_SCRIPT_URL_HERE";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxRmgj2G2ToTLwQq0l6uy0Mm7PAufwFENbBWuA-t5NQej_c3fsuJHYqUS8drryPV1ZqSQ/exec";
 const $=id=>document.getElementById(id), form=$("form");
 function logoFallback(img){const b=document.createElement("b");b.className="logo-fb";b.textContent="FNEA";img.replaceWith(b)}
 function fill(sel,items,first){sel.innerHTML=(first!==undefined?`<option value="${first[0]}">${first[1]}</option>`:"")+items.map(v=>`<option>${v}</option>`).join("")}
