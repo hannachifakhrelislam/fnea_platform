@@ -4,7 +4,7 @@ const COMMUNES={"قالمة":["قالمة","النشماية","بوشقوف","ه
 const FACULTIES=["كلية الرياضيات والإعلام الآلي وعلوم المادة","كلية العلوم والتكنولوجيا","كلية علوم الطبيعة والحياة وعلوم الأرض والكون","كلية الآداب واللغات","كلية العلوم الإنسانية والاجتماعية","كلية الحقوق والعلوم السياسية","كلية العلوم الاقتصادية والتجارية وعلوم التسيير","معهد الهندسة المدنية والري","معهد الهندسة الميكانيكية","معهد علوم وتقنيات النشاطات البدنية والرياضية"];
 const RESIDENCES=["الإقامة الجامعية هباش أحمد الشريف","الإقامة الجامعية عڤون صالح","الإقامة الجامعية عبداوي مبروك","الإقامة الجامعية غولي إبراهيم","الإقامة الجامعية مدور عيسى","الإقامة الجامعية يحيى صالح","الإقامة الجامعية بلحساب عمر","الإقامة الجامعية بوحديد بلقاسم","الإقامة الجامعية قارة صالح"];
 // ضع هنا رابط Apps Script المنشور (Web app)
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxRmgj2G2ToTLwQq0l6uy0Mm7PAufwFENbBWuA-t5NQej_c3fsuJHYqUS8drryPV1ZqSQ/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbz5XWJv9v-GHsjOhTFmuRWQL-rAggvSrW91Nj6Y6H1jHtosjQM-62uv1lwTBchcp_9H/exec";
 const $=id=>document.getElementById(id), form=$("form");
 function logoFallback(img){const b=document.createElement("b");b.className="logo-fb";b.textContent="FNEA";img.replaceWith(b)}
 function fill(sel,items,first){sel.innerHTML=(first!==undefined?`<option value="${first[0]}">${first[1]}</option>`:"")+items.map(v=>`<option>${v}</option>`).join("")}
