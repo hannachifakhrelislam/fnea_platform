@@ -1,0 +1,152 @@
+/* ===== تبويبات التنقل: تتبع هوية الموقع الحالية (البنفسجي) ===== */
+.tabs{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:8px;padding:10px 16px;background:#110b22d9;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs a{padding:8px 18px;border-radius:999px;color:var(--lilac);text-decoration:none;font:600 15px "Reem Kufi",serif;border:1px solid transparent;transition:background .2s,color .2s}
+.tabs a:hover{border-color:var(--line)}
+.tabs a[aria-current]{background:var(--violet);color:#fff}
+.tabs a:focus-visible{outline:2px solid var(--lilac);outline-offset:2px}
+body.ca-on{background:#060807}
+body.ca-on .glow{display:none}
+
+/* ===== هوية المسابقة: أسود / أخضر عميق / ذهبي ===== */
+#ca{--bg:#060807;--bg2:#0b1511;--gr:#0e3b2c;--gr2:#17694a;--au:#d4af37;--au2:#f0d78a;--tx:#f3efe3;--mu:#9fb3a8;--ln:#2a3a31;position:relative;z-index:1;color:var(--tx);overflow-x:hidden}
+#ca[hidden]{display:none}
+#ca *{box-sizing:border-box}
+#ca button{height:auto;border:0;border-radius:0;background:none;box-shadow:none;color:inherit;font:inherit;cursor:pointer;text-align:inherit;transform:none}
+#ca button:hover{transform:none}
+#ca :focus-visible{outline:2px solid var(--au);outline-offset:3px}
+.ca-wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+.ca-sec{padding:64px 0 8px}
+.ca-sec h3{font:700 clamp(26px,5vw,38px)/1.25 "Reem Kufi",serif;margin-bottom:10px}
+.ca-lead{color:var(--mu);max-width:62ch;margin-bottom:26px}
+.ca-rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.ca-rv.in{opacity:1;transform:none}
+
+/* Hero */
+.ca-hero{position:relative;min-height:calc(100svh - 56px);display:grid;place-items:center;text-align:center;padding:56px 20px 40px;background:radial-gradient(120% 80% at 50% 0,var(--gr) 0,var(--bg) 62%);overflow:hidden;--mx:0;--my:0}
+.ca-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ca-orb{position:absolute;width:min(70vw,520px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#d4af3730,transparent 65%);top:50%;left:50%;transform:translate(calc(-50% + var(--mx)*30px),calc(-50% + var(--my)*30px));transition:transform .25s ease-out;pointer-events:none}
+.ca-hero-in{position:relative;display:grid;gap:14px;justify-items:center;max-width:760px}
+.ca-eyebrow{color:var(--au2);font-size:14px;border:1px solid var(--ln);border-radius:999px;padding:6px 16px;background:#0b151180}
+.ca-title{display:grid;line-height:1;margin:6px 0}
+.ca-title span{font:500 clamp(22px,5vw,34px) "Reem Kufi",serif;letter-spacing:.5em;color:var(--mu);padding-inline-start:.5em}
+.ca-title b{font:700 clamp(40px,11vw,92px) "Reem Kufi",serif;letter-spacing:.04em;background:linear-gradient(100deg,#a9831c 0,var(--au2) 40%,var(--au) 60%,#a9831c 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:caShine 7s linear infinite}
+@keyframes caShine{to{background-position:-220% 0}}
+.ca-sub{font:600 clamp(22px,4.5vw,32px) "Reem Kufi",serif}
+.ca-quote{color:var(--au2);font-size:18px}
+.ca-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+#ca .ca-btn{min-height:52px;padding:0 28px;border-radius:14px;font:700 18px "Reem Kufi",serif;text-align:center;transition:transform .2s,box-shadow .2s,background .2s}
+#ca .ca-btn.gold{background:linear-gradient(135deg,var(--au2),var(--au));color:#1a1405;box-shadow:0 14px 34px -12px #d4af37}
+#ca .ca-btn.ghost{border:1px solid var(--au);color:var(--au2)}
+#ca .ca-btn:hover{transform:translateY(-2px)}
+#ca .ca-btn:disabled{opacity:.55;cursor:wait;transform:none}
+.ca-count{display:flex;gap:10px;margin-top:20px;justify-content:center}
+.ca-count div{min-width:68px;padding:10px 6px;border:1px solid var(--ln);border-radius:14px;background:#0b1511b3;backdrop-filter:blur(6px)}
+.ca-count b{display:block;font:700 clamp(24px,6vw,34px)/1.1 "Reem Kufi",serif;color:var(--au2);font-variant-numeric:tabular-nums}
+.ca-count small{color:var(--mu);font-size:12px}
+.ca-count-end{font:700 24px "Reem Kufi",serif;color:var(--au2);border:1px solid var(--au);padding:12px 26px;border-radius:14px}
+.ca-count-lbl{color:var(--mu);font-size:14px;margin-top:18px}
+
+/* بطاقات عامة */
+.ca-grid{display:grid;gap:14px}
+.ca-card{padding:20px;border:1px solid var(--ln);border-radius:18px;background:linear-gradient(160deg,var(--bg2),#080d0b);transition:transform .3s,border-color .3s}
+.ca-card:hover{transform:translateY(-4px);border-color:#d4af3788}
+.ca-card em{font-style:normal;font-size:30px;display:block;margin-bottom:6px}
+.ca-card h4{font:700 20px "Reem Kufi",serif}
+.ca-card p{color:var(--mu);font-size:15px}
+
+/* Accordion (مراحل / نصائح / أسئلة) */
+.ca-acc{border:1px solid var(--ln);border-radius:16px;background:var(--bg2);overflow:hidden;transition:border-color .3s}
+.ca-acc.open{border-color:var(--au)}
+#ca .ca-acc>button{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;min-height:56px;font:600 17px "IBM Plex Sans Arabic",sans-serif}
+.ca-acc>button i{margin-inline-start:auto;color:var(--au);font-style:normal;transition:transform .3s}
+.ca-acc.open>button i{transform:rotate(45deg)}
+.ca-n{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--au);color:var(--au2);font:700 14px "Reem Kufi"}
+.ca-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.ca-acc.open .ca-more{grid-template-rows:1fr}
+.ca-more>div{overflow:hidden;min-height:0;color:var(--mu);padding:0 18px}
+.ca-acc.open .ca-more>div{padding-bottom:16px}
+.ca-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.ca-tipsub{color:var(--mu);font-size:14px;padding:0 18px 14px;margin-top:-6px}
+
+/* Quiz */
+.ca-quiz{border:1px solid var(--ln);border-radius:20px;padding:22px 18px;background:linear-gradient(160deg,var(--bg2),#080d0b)}
+.ca-q{padding:14px 0;border-bottom:1px solid var(--ln);display:grid;gap:10px}
+.ca-q p{font-weight:600}
+.ca-yn{display:flex;gap:10px}
+#ca .ca-yn button{flex:1;min-height:46px;border:1px solid var(--ln);border-radius:12px;text-align:center;transition:background .2s,border-color .2s}
+#ca .ca-yn button[aria-pressed=true]{background:var(--gr2);border-color:var(--au2);color:#fff}
+.ca-res{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin-top:18px;opacity:0;transform:scale(.96);transition:opacity .6s,transform .6s}
+.ca-res.show{opacity:1;transform:none}
+.ca-res[hidden]{display:none}
+.ca-ring{width:84px;height:84px;transform:rotate(-90deg)}
+.ca-ring circle{fill:none;stroke-width:7}
+.ca-ring .bg{stroke:var(--ln)}.ca-ring .fg{stroke:var(--au);stroke-linecap:round;stroke-dasharray:214;stroke-dashoffset:214;transition:stroke-dashoffset 1.2s ease}
+.ca-res h4{font:700 22px "Reem Kufi",serif}.ca-res p{color:var(--mu)}
+
+/* معايير التقييم */
+.ca-crit{display:grid;gap:16px}
+.ca-crit div{display:grid;gap:6px}
+.ca-crit span{display:flex;justify-content:space-between;font-weight:600}
+.ca-crit b{color:var(--au2);font-variant-numeric:tabular-nums}
+.ca-bar{height:10px;border-radius:10px;background:#16241d;overflow:hidden}
+.ca-bar i{display:block;height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,var(--gr2),var(--au));transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.ca-crit.in .ca-bar i{width:var(--w)}
+
+/* الجوائز */
+.ca-podium .ca-card{text-align:center}
+.ca-podium .p1{border-color:var(--au);box-shadow:0 0 40px -14px var(--au)}
+.ca-note{margin-top:16px;color:var(--au2);text-align:center}
+
+/* التسجيل */
+.ca-reg{border:1px solid var(--ln);border-radius:22px;padding:22px 18px;background:linear-gradient(160deg,var(--bg2),#080d0b)}
+.ca-prog{height:6px;border-radius:6px;background:#16241d;overflow:hidden;margin-bottom:14px}
+.ca-prog i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--gr2),var(--au));transition:width .4s}
+.ca-steps{display:flex;gap:8px;margin-bottom:18px;align-items:center}
+.ca-steps span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid var(--ln);color:var(--mu);font:600 13px "Reem Kufi";flex:none}
+.ca-steps span.on{border-color:var(--au);color:var(--au2)}
+.ca-steps span.ok{background:var(--gr2);border-color:var(--gr2);color:#fff}
+.ca-steps h4{font:700 19px "Reem Kufi",serif;margin-inline-start:6px}
+.ca-fields{display:grid;gap:14px;animation:caIn .4s}
+@keyframes caIn{from{opacity:0;transform:translateX(-14px)}}
+#ca .f{color:var(--au2);font-size:14px}
+#ca input:not([type=checkbox]),#ca select,#ca textarea{width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--ln);background:#050907;color:var(--tx);font:inherit}
+#ca textarea{resize:vertical}
+#ca input:focus-visible,#ca select:focus-visible,#ca textarea:focus-visible{border-color:var(--au);box-shadow:0 0 0 4px #d4af3730;outline:none}
+#ca .bad{border-color:#ff8aa1}
+.ca-err{color:#ff8aa1;font-size:13px;min-height:0}
+.ca-chips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ca-chip{position:relative}
+#ca .ca-chip input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.ca-chip span{display:flex;align-items:center;justify-content:center;min-height:50px;padding:6px 10px;text-align:center;border:1.5px solid var(--ln);border-radius:12px;cursor:pointer;transition:background .2s,border-color .2s}
+.ca-chip input:checked+span{background:var(--gr2);border-color:var(--au2);color:#fff}
+.ca-chip input:focus-visible+span{outline:2px solid var(--au);outline-offset:2px}
+.ca-sum{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px}
+.ca-sum dt{color:var(--mu)}.ca-sum dd{font-weight:600;overflow-wrap:anywhere;margin:0}
+.ca-nav{display:flex;gap:10px;margin-top:20px}
+.ca-nav .ca-btn{flex:1}
+.ca-ok{text-align:center;padding:24px 8px;display:grid;gap:10px;justify-items:center}
+.ca-ok svg{width:92px;height:92px}
+.ca-ok circle,.ca-ok path{fill:none;stroke:var(--au);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:260;stroke-dashoffset:260;animation:caDraw 1s .1s forwards}
+.ca-ok path{animation-delay:.7s;stroke-dasharray:60;stroke-dashoffset:60}
+@keyframes caDraw{to{stroke-dashoffset:0}}
+
+/* CTA نهائي + أدوات */
+.ca-final{margin-top:70px;padding:70px 20px;text-align:center;background:radial-gradient(100% 120% at 50% 100%,var(--gr) 0,var(--bg) 70%);border-top:1px solid var(--ln)}
+.ca-final h3{font:700 clamp(32px,7vw,56px)/1.2 "Reem Kufi",serif}
+.ca-final p{color:var(--au2);margin:8px 0 24px;font-size:19px}
+#ca .ca-top{position:fixed;bottom:18px;inset-inline-start:18px;width:46px;height:46px;border-radius:50%;background:var(--gr);border:1px solid var(--au);color:var(--au2);font-size:20px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:15}
+#ca .ca-top.show{opacity:1;pointer-events:auto}
+.ca-toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);background:#0e3b2c;border:1px solid var(--au);color:#fff;padding:12px 20px;border-radius:12px;opacity:0;transition:.35s;z-index:30;max-width:90vw;text-align:center}
+.ca-toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:760px){
+  .ca-g2{grid-template-columns:1fr 1fr}.ca-g3{grid-template-columns:repeat(3,1fr)}.ca-g4{grid-template-columns:repeat(4,1fr)}
+  .ca-fields.two{grid-template-columns:1fr 1fr}.ca-fields .wide{grid-column:1/-1}
+  .ca-chips{grid-template-columns:repeat(3,1fr)}
+  .ca-reg{padding:30px}
+}
+@media(max-width:759px){.ca-fx{opacity:.7}.ca-steps h4{font-size:16px}}
+@media(prefers-reduced-motion:reduce){
+  .ca-rv{opacity:1;transform:none}
+  #ca *,#ca *::before{animation:none!important;transition:none!important}
+}
