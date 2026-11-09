@@ -3,8 +3,8 @@
 
 /* ====== إعدادات تعدّلها الإدارة ====== */
 const CA_CONFIG = {
-  deadline: "2026-12-20T23:59:59+01:00", // نهاية التسجيل (غيّر التاريخ هنا فقط)
-  scriptUrl: "PASTE_CA_SCRIPT_URL_HERE"  // رابط Apps Script الخاص بسجل المسابقة
+  deadline: "2026-12-01T23:59:59+01:00",, // نهاية التسجيل (غيّر التاريخ هنا فقط)
+  scriptUrl: "https://script.google.com/macros/s/AKfycbwTyXCdO2WP4UsVxPcWYAvS2DVAuzgeD6g3uO8zvutwRhz8WnGIU4i_BpvgHF85BmcQ/exec"  // رابط Apps Script الخاص بسجل المسابقة
 };
 
 const $ = (s, r = document) => r.querySelector(s);
