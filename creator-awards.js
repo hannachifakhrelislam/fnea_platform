@@ -1,28 +1,294 @@
-(()=>{"use strict";
-const CA_CONFIG={registrationOpen:"2026-11-15T00:00:00+01:00",registrationClose:"2026-11-22T23:59:59+01:00",training:"2026-11-24T09:00:00+01:00",submissionDeadline:"2026-12-01T23:59:59+01:00",top08:"2026-12-06T18:00:00+01:00",opening:"2026-12-07T09:00:00+01:00",challenges:"2026-12-08T09:00:00+01:00",finale:"2026-12-09T18:00:00+01:00",instagramHandle:"@fnea_guelma",instagramUrl:"https://www.instagram.com/fnea_guelma/",scriptUrl:"https://script.google.com/macros/s/AKfycbwTyXCdO2WP4UsVxPcWYAvS2DVAuzgeD6g3uO8zvutwRhz8WnGIU4i_BpvgHF85BmcQ/exec"};
-const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)],reduce=matchMedia("(prefers-reduced-motion: reduce)").matches,esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])),ca=$("#ca"),joinView=$("#view-join");if(!ca)return;
-const TIMELINE=[["15 نوفمبر 2026","فتح التسجيلات","انطلاق التسجيل الإلكتروني للمشاركة."],["22 نوفمبر 2026","غلق التسجيلات","آخر أجل للتسجيل في المسابقة."],["24 نوفمبر 2026","التدريب الإلزامي + انطلاق المسابقة","يوم تحضيري إلزامي يتضمن معلومات المسابقة وورشات تساعد المشاركين على الاستعداد."],["01 ديسمبر 2026","آخر أجل لإرسال الأعمال","آخر موعد لإرسال العمل النهائي عبر Instagram."],["06 ديسمبر 2026","إعلان TOP 08","الإعلان عن أفضل ثمانية أعمال المتأهلة."],["07 ديسمبر 2026","الافتتاح + الورشات","افتتاح النشاط المتواصل وورشات التدريب."],["08 ديسمبر 2026","التحديات العامة","تحديات وفعاليات المسابقة."],["09 ديسمبر 2026","الحفل الختامي + إعلان الفائزين","اختتام UM1945 Creator Awards والإعلان عن ثلاثة فائزين."]];
-const FORMATS=[["🎬","فيلم قصير","حوّل فكرة جامعية إلى قصة قصيرة."],["🎥","وثائقي","اكتشف جانبًا من الحياة الجامعية."],["😂","محتوى كوميدي","قدّم الكوميديا باحترام وذكاء."],["🎙️","مقابلة","اسأل، استمع، وانقل قصة حقيقية."],["📱","Reel إبداعي","فكرة سريعة بإخراج بصري ذكي."],["✍️","Storytelling","اجعل القصة هي البطل."],["💡","فكرة مبتكرة","قدّم الجامعة من زاوية مختلفة."]];
-const CRITERIA=[["01","الإبداع والأصالة","هل للفكرة شخصية وزاوية مختلفة؟"],["02","قوة الفكرة","هل الرسالة واضحة وقوية؟"],["03","جودة التنفيذ والإخراج","الصورة، الصوت، المونتاج والإخراج."],["04","الارتباط بالجامعة","هل يحافظ العمل على الإطار الجامعي؟"],["05","المحتوى والسرد","هل المحتوى متماسك وممتع؟"],["06","التفاعل والتصويت الجماهيري","التصويت الجماهيري معيار من عدة معايير، وليس المعيار الوحيد."],["07","احترام الضوابط","الالتزام بالشروط الأخلاقية والتنظيمية."]];
-const RULES=[["01 · احترام الأشخاص والكرامة","يمنع السب، التشهير، التنمر، الإهانة أو السخرية المهينة من أي شخص."],["02 · احترام الخصوصية","لا تنشر أشخاصًا أو معلومات بطريقة تنتهك خصوصيتهم، واحصل على الموافقات اللازمة عند الحاجة."],["03 · احترام الجامعة ومحيطها","يجب ألا يتضمن العمل إساءة متعمدة للجامعة أو منشآتها أو طلبتها أو موظفيها."],["04 · منع خطاب الكراهية والتمييز","يمنع أي محتوى يحرض على الكراهية أو التمييز أو يستهدف شخصًا أو فئة بالإهانة."],["05 · المحتوى غير المناسب","يمنع المحتوى أو الألفاظ أو المشاهد غير المناسبة للوسط الجامعي."],["06 · حقوق الملكية الفكرية","احترم حقوق المؤلف والصور والموسيقى والمواد التي لا تملك حق استخدامها."],["07 · الأصالة وعدم الانتحال","يجب أن يعكس العمل فكرة وجهد المشارك، ولا يجوز تقديم عمل الغير على أنه عملك."],["08 · احترام القوانين والأنظمة","يجب احترام القوانين والتنظيمات المعمول بها وقواعد الجامعة الداخلية."],["09 · الإطار الجامعي","المحتوى يجب أن يبقى مرتبطًا بالجامعة ولا يتحول إلى محتوى خارج إطار المسابقة أو يسيء للأشخاص أو المؤسسة."],["10 · قرار التنظيم","يحق للمنظمين استبعاد أي عمل يثبت مخالفته للشروط أو الضوابط المعلنة."]];
-const WORKSHOPS=[["📷","التصوير","أساسيات الصورة، الكادر، الإضاءة وكيف تجعل اللقطة تخدم الفكرة."],["✂️","المونتاج","من اللقطات الخام إلى فيديو متماسك بإيقاع يخدم القصة."],["📝","كتابة السيناريو","الفكرة، البناء، الحوار، المشهد، وبناء قصة قصيرة قوية."]];
-const PARTNERS=["نادي كرياتيفا للفنون البصرية","نادي بيكوم للإعلام والاتصال","نادي Tech Geeks للإعلام الآلي"];
-const FAQ=[["هل المشاركة فردية؟","نعم. المشاركة فردية وليست جماعية."],["من يمكنه المشاركة؟","طلبة جامعة 8 ماي 1945 – قالمة."],["هل توجد فئة أو موضوع إجباري؟","لا توجد فئة إلزامية. الشكل والفكرة من اختيار المشارك، بشرط أن يكون العمل مرتبطًا بالجامعة ويحترم الضوابط."],["ما مدة الفيديو؟","ثلاث دقائق كحد أقصى."],["هل أرفع الفيديو عند التسجيل؟","لا. التسجيل لا يتضمن رفع الفيديو. التسجيل يخص معلومات المشارك وفكرة المشروع فقط."],["أين أرسل العمل؟","بعد إنجاز العمل، يتم إرساله عبر حساب Instagram الرسمي: @fnea_guelma."],["هل التدريب إجباري؟","نعم. يوم 24 نوفمبر إلزامي لأنه يتضمن معلومات المسابقة والتحضير للمشاركين."],["متى آخر أجل لإرسال العمل؟","01 ديسمبر 2026."],["متى يتم إعلان TOP 08؟","06 ديسمبر 2026."],["متى يتم إعلان الفائزين؟","09 ديسمبر 2026 خلال الحفل الختامي."],["هل التصويت الجماهيري وحده يحدد الفائز؟","لا. التصويت الجماهيري معيار واحد ضمن مجموعة من معايير التقييم."]];
-const STEPS=[{t:"معلومات المشارك",f:["fullName","email","phone","faculty","department","level"]},{t:"فكرة مشروعك",f:["projectTitle","projectIdea","format"]},{t:"تأكيد الشروط",rules:true},{t:"مراجعة وإرسال",sum:true}];
-const FIELDS={fullName:["الاسم واللقب","text","اكتب اسمك ولقبك"],email:["البريد الإلكتروني","email","example@email.com"],phone:["رقم الهاتف","tel","05XXXXXXXX"],faculty:["الكلية / المعهد","text","اكتب الكلية أو المعهد"],department:["التخصص","text","اكتب تخصصك"],level:["المستوى الجامعي","select",["ليسانس 1","ليسانس 2","ليسانس 3","ماستر 1","ماستر 2","دكتوراه","أخرى"]],projectTitle:["عنوان المشروع / الفكرة","text","مثال: يوم في حياة طالب"],projectIdea:["فكرة المشروع","area","اشرح فكرتك باختصار"],format:["الشكل المقترح للعمل","text","اختياري — فيلم، Reel، مقابلة..."]};
-const VALID={fullName:v=>/\S+\s+\S+/.test(v)?"":"اكتب الاسم واللقب كاملين.",email:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?"":"اكتب بريدًا إلكترونيًا صحيحًا.",phone:v=>/^0[567]\d{8}$/.test(v)?"":"الهاتف يبدأ بـ 05 أو 06 أو 07 ويتكون من 10 أرقام.",faculty:v=>v.length>=2?"":"اكتب الكلية أو المعهد.",department:v=>v.length>=2?"":"اكتب التخصص.",level:v=>v?"":"اختر المستوى الجامعي.",projectTitle:v=>v.length>=3?"":"اكتب عنوانًا واضحًا للمشروع.",projectIdea:v=>v.length>=20?"":"اكتب 20 حرفًا على الأقل لشرح الفكرة."};
-let D={},step=0,sending=false;const K="um1945_ca_draft_v2",DONE="um1945_ca_done_v2";const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-function acc(h,b){return `<div class="ca-acc ca-rv"><button type="button" data-acc aria-expanded="false">${h}<i aria-hidden="true">+</i></button><div class="ca-more"><div>${b}</div></div></div>`}
-function build(){ca.innerHTML=`<section class="ca-hero" aria-labelledby="ca-h1"><canvas class="ca-fx" aria-hidden="true"></canvas><div class="ca-orb" aria-hidden="true"></div><div class="ca-hero-in"><p class="ca-eyebrow">جامعة 8 ماي 1945 قالمة × المنتدى الوطني للطلبة الجزائريين FNEA</p><h2 class="ca-title" id="ca-h1"><span>UM1945</span><b>CREATOR AWARDS</b></h2><p class="ca-sub">الجامعة بعيون طلبتها</p><p class="ca-quote">مسابقة إبداعية لصناعة محتوى يحكي الجامعة بطريقتك.</p><div class="ca-badges"><span>👤 مشاركة فردية</span><span>🏫 طلبة جامعة 8 ماي 1945</span><span>🎬 3 دقائق كحد أقصى</span></div><div class="ca-cta"><button type="button" class="ca-btn gold" data-go="ca-register">📝 التسجيل في المسابقة</button><button type="button" class="ca-btn ghost" data-go="ca-timeline">📅 اكتشف البرنامج</button></div><div class="ca-status"><strong id="ca-phase">جارٍ تحديد المرحلة...</strong><span id="ca-phase-note"></span></div><p class="ca-count-lbl" id="ca-lbl">العد التنازلي</p><div class="ca-count" id="ca-count" role="timer"></div></div></section><div class="ca-wrap"><section class="ca-sec" id="ca-about"><h3 class="ca-rv">لو كان بإمكانك أن تحكي قصة جامعتك... ماذا ستقول؟</h3><p class="ca-lead ca-rv">الجامعة ليست مباني وقاعات فقط؛ هي أشخاص، لحظات، أفكار، طموحات وذكريات. اختر قصتك، واختر أسلوبك، وحوّل الحياة الجامعية إلى محتوى يستحق أن يُرى.</p><div class="ca-grid ca-g4">${[["🎥","صانع فيديو","فيديو ومحتوى قصير"],["📸","صانع بصري","تصوير وإخراج"],["🎙️","راوي ومقدم","مقابلات وحكايات"],["💡","صاحب فكرة","محتوى مبتكر"]].map(x=>`<article class="ca-card ca-rv"><em>${x[0]}</em><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">ماذا يمكنك أن تصنع؟</h3><p class="ca-lead ca-rv">هذه أمثلة للإلهام فقط، وليست فئات إلزامية. أنت حر في اختيار شكل عملك ما دام مرتبطًا بالجامعة ويحترم الضوابط.</p><div class="ca-grid ca-g4">${FORMATS.map(x=>`<article class="ca-card ca-rv"><em>${x[0]}</em><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">شروط المشاركة</h3><div class="ca-grid ca-g3">${[["01","مشاركة فردية","المشاركة فردية."],["02","طالب جامعي","مخصصة لطلبة جامعة 8 ماي 1945 – قالمة."],["03","موضوع حر","لا توجد فئة إلزامية، لكن العمل يجب أن يكون مرتبطًا بالجامعة."],["04","3 دقائق","مدة الفيديو ثلاث دقائق كحد أقصى."],["05","لا رفع عند التسجيل","التسجيل لا يتضمن رفع الفيديو."],["06","Instagram","الإرسال النهائي يتم عبر @fnea_guelma."]].map(x=>`<article class="ca-card ca-rv"><b class="ca-num">${x[0]}</b><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div><div class="ca-warning ca-rv"><strong>⚠️ مهم:</strong> التسجيل في المسابقة لا يعني إرسال الفيديو. بعد إنجاز العمل، يتم إرسال الفيديو عبر حساب Instagram الرسمي للمسابقة.</div></section><section class="ca-sec" id="ca-timeline"><h3 class="ca-rv">البرنامج الرسمي</h3><p class="ca-lead ca-rv">تابع كل محطة من التسجيل إلى الحفل الختامي.</p><div class="ca-timeline">${TIMELINE.map((x,i)=>`<article class="ca-time ca-rv"><div class="ca-time-dot">${String(i+1).padStart(2,"0")}</div><div><small>${x[0]}</small><h4>${x[1]}</h4><p>${x[2]}</p></div></article>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">24 نوفمبر · يوم التدريب الإلزامي</h3><p class="ca-lead ca-rv">الحضور إلزامي لأنه يتضمن معلومات المسابقة والتحضير للمشاركين قبل الدخول في مرحلة الإنجاز.</p><div class="ca-grid ca-g3">${WORKSHOPS.map(x=>`<article class="ca-card ca-rv"><em>${x[0]}</em><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div><div class="ca-partners ca-rv"><span>شركاء التدريب المقترحون</span>${PARTNERS.map(x=>`<b>${x}</b>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">رحلة المشاركة</h3><div class="ca-grid ca-g4">${[["01","اختر فكرتك","ما الذي تريد أن يراه الناس في جامعتك؟"],["02","اصنع المحتوى","صوّر، اكتب، سجّل وحرّر بطريقتك."],["03","راجع عملك","تأكد من الجودة واحترام الضوابط."],["04","أرسل العمل","الإرسال النهائي عبر Instagram قبل 01 ديسمبر."]].map(x=>`<article class="ca-card ca-rv"><b class="ca-num">${x[0]}</b><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">الضوابط الأخلاقية والتنظيمية</h3><p class="ca-lead ca-rv">اضغط على كل بند لمعرفة التفاصيل.</p><div class="ca-list">${RULES.map(x=>acc(x[0],x[1])).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">معايير التقييم</h3><p class="ca-lead ca-rv">التقييم يعتمد على عدة معايير. التصويت الجماهيري عنصر من هذه المعايير وليس المعيار الوحيد، ولم يتم اعتماد نسب مئوية في الشروط الحالية.</p><div class="ca-grid ca-g3">${CRITERIA.map(x=>`<article class="ca-card ca-rv"><b class="ca-num">${x[0]}</b><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join("")}</div></section><section class="ca-sec" id="ca-submit"><h3 class="ca-rv">📲 أين أرسل عملي؟</h3><div class="ca-instagram ca-rv"><div><span class="ca-ig-label">حساب Instagram الرسمي</span><strong>${esc(CA_CONFIG.instagramHandle)}</strong><p>بعد إنجاز الفيديو، أرسله عبر الحساب الرسمي. التسجيل هنا لا يحتوي على رفع للفيديو.</p></div><a class="ca-btn gold" href="${CA_CONFIG.instagramUrl}" target="_blank" rel="noopener">إرسال العمل عبر Instagram ↗</a></div><p class="ca-deadline ca-rv">⏰ آخر أجل لإرسال الأعمال: <strong>01 ديسمبر 2026</strong></p></section><section class="ca-sec"><h3 class="ca-rv">TOP 08</h3><p class="ca-lead ca-rv">يُعلن عن أفضل ثمانية أعمال يوم 06 ديسمبر 2026. ستظهر بيانات المتأهلين هنا بعد الإعلان الرسمي.</p><div class="ca-grid ca-g4">${Array.from({length:8},(_,i)=>`<article class="ca-card ca-finalist ca-rv"><b class="ca-num">${String(i+1).padStart(2,"0")}</b><em>🎬</em><h4>سيتم الإعلان لاحقًا</h4><p>المشارك واسم العمل سيظهران بعد الإعلان الرسمي عن TOP 08.</p></article>`).join("")}</div></section><section class="ca-sec"><h3 class="ca-rv">لجنة التحكيم</h3><p class="ca-lead ca-rv">سيتم الإعلان عن أعضاء لجنة التحكيم قريبًا.</p><div class="ca-card ca-jury-placeholder ca-rv"><span>👥</span><h4>لجنة التحكيم</h4><p>الأسماء والصور والأدوار ستُضاف عند اعتمادها رسميًا.</p></div></section><section class="ca-sec"><h3 class="ca-rv">🏆 THE GRAND FINALE</h3><p class="ca-lead ca-rv">حفل اختتام UM1945 Creator Awards — 09 ديسمبر 2026.</p><div class="ca-grid ca-g3">${[["🥇","المركز الأول"],["🥈","المركز الثاني"],["🥉","المركز الثالث"]].map(x=>`<article class="ca-card ca-winner ca-rv"><em>${x[0]}</em><h4>${x[1]}</h4><p>سيتم الإعلان عن الفائز لاحقًا.</p></article>`).join("")}</div><p class="ca-note ca-rv">سيتم الإعلان عن تفاصيل الجوائز لاحقًا.</p></section><section class="ca-sec" id="ca-register"><h3 class="ca-rv">📝 التسجيل في المسابقة</h3><p class="ca-lead ca-rv">أدخل معلوماتك وفكرة مشروعك. لا يوجد رفع للفيديو في هذه المرحلة.</p><div class="ca-reg ca-rv" id="ca-reg"></div></section><section class="ca-sec"><h3 class="ca-rv">الأسئلة الشائعة</h3><div class="ca-list">${FAQ.map(x=>acc(x[0],x[1])).join("")}</div></section></div><section class="ca-final"><h3 class="ca-rv">جاهز تحكي قصة جامعتك؟</h3><p class="ca-rv">سجّل الآن وكن جزءًا من UM1945 Creator Awards.</p><button type="button" class="ca-btn gold ca-rv" data-go="ca-register">سجّل الآن 🚀</button></section><button type="button" class="ca-top" id="ca-top" aria-label="العودة إلى الأعلى">↑</button><div class="ca-toast" id="ca-toast" role="status"></div>`}
-function toast(m){const t=$("#ca-toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),3500)}function go(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})}
-function phase(){const d=CA_CONFIG,n=Date.now(),e=[[d.registrationOpen,"التسجيل يفتح قريبًا","حتى فتح التسجيل"],[d.registrationClose,"التسجيل مفتوح الآن","حتى غلق التسجيل"],[d.training,"التسجيل مغلق · التدريب الإلزامي قريبًا","حتى يوم التدريب"],[d.submissionDeadline,"المسابقة جارية · أنجز عملك","حتى آخر أجل لإرسال الأعمال"],[d.top08,"انتهى الإرسال · مرحلة التقييم","حتى إعلان TOP 08"],[d.opening,"TOP 08 قريبًا · الفعاليات على الأبواب","حتى الافتتاح"],[d.challenges,"الفعاليات جارية · التحديات العامة","حتى التحديات العامة"],[d.finale,"الحفل الختامي قريبًا","حتى الحفل الختامي"]];for(const x of e)if(n<new Date(x[0]).getTime())return x;return[null,"انتهت نسخة 2026 · شكرًا للمشاركين",""]}
-function countdown(){const box=$("#ca-count"),ph=$("#ca-phase"),note=$("#ca-phase-note"),label=$("#ca-lbl");const[target,title,noteText]=phase();ph.textContent=title;note.textContent=noteText;if(!target){box.innerHTML='<span class="ca-count-end">انتهت نسخة 2026</span>';label.hidden=true;return}const end=new Date(target).getTime();const units=[["يوم",864e5],["ساعة",36e5],["دقيقة",6e4],["ثانية",1e3]];box.innerHTML=units.map(x=>`<div><b>00</b><small>${x[0]}</small></div>`).join("");const nums=$$("b",box);function tick(){let d=end-Date.now();if(d<=0){countdown();return}units.forEach((x,i)=>{const n=Math.floor(d/x[1]);d-=n*x[1];nums[i].textContent=String(n).padStart(2,"0")})}tick();clearInterval(countdown.timer);countdown.timer=setInterval(tick,1000)}
-function hero(){const h=$(".ca-hero"),c=$(".ca-fx");if(reduce||!c)return;if(matchMedia("(pointer:fine)").matches)h.addEventListener("pointermove",e=>{const r=h.getBoundingClientRect();h.style.setProperty("--mx",((e.clientX-r.left)/r.width-.5).toFixed(2));h.style.setProperty("--my",((e.clientY-r.top)/r.height-.5).toFixed(2))});const x=c.getContext("2d"),N=innerWidth<700?20:42;let w,hh,ps=[];const size=()=>{w=c.width=c.offsetWidth;hh=c.height=c.offsetHeight;ps=Array.from({length:N},()=>({x:Math.random()*w,y:Math.random()*hh,r:Math.random()*1.7+.4,v:Math.random()*.25+.08}))};const draw=()=>{x.clearRect(0,0,w,hh);ps.forEach(p=>{p.y-=p.v;if(p.y<0)p.y=hh;x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle="rgba(212,175,55,.35)";x.fill()});requestAnimationFrame(draw)};size();addEventListener("resize",size,{passive:true});draw()}
-function fieldHTML(n){const[l,t,o]=FIELDS[n],v=D[n]||"";let c;if(t==="select")c=`<select id="f-${n}" name="${n}"><option value="">اختر</option>${o.map(x=>`<option${x===v?" selected":""}>${esc(x)}</option>`).join("")}</select>`;else if(t==="area")c=`<textarea id="f-${n}" name="${n}" rows="5" placeholder="${esc(o)}">${esc(v)}</textarea>`;else c=`<input id="f-${n}" name="${n}" type="${t}" value="${esc(v)}" placeholder="${esc(o)}" ${t==="tel"?'inputmode="numeric" maxlength="10" autocomplete="tel"':''} ${["email","tel"].includes(t)?'dir="ltr"':''}>`;return `<label class="f${["email","projectTitle","projectIdea","format"].includes(n)?" wide":""}">${l}${c}<small class="ca-err" id="e-${n}" role="alert"></small></label>`}
-function renderReg(){const reg=$("#ca-reg"),s=STEPS[step];let body="";if(s.f)body=`<div class="ca-fields ${step===0?"two":""}">${s.f.map(fieldHTML).join("")}</div>`;if(s.rules)body=`<div class="ca-rule-check"><div class="ca-warning"><strong>قبل الإرسال:</strong> أؤكد أنني اطلعت على شروط وضوابط المسابقة، وأن مشاركتي فردية وأن عملي مرتبط بالجامعة.</div><label class="ca-consent"><input type="checkbox" id="ca-consent" ${D.consent?"checked":""}><span>أوافق على الشروط والضوابط وأقر بصحة المعلومات التي قدمتها.</span></label><small class="ca-err" id="e-consent"></small></div>`;if(s.sum){const rows=[["الاسم",D.fullName],["البريد",D.email],["الهاتف",D.phone],["الكلية / المعهد",D.faculty],["التخصص",D.department],["المستوى",D.level],["عنوان المشروع",D.projectTitle],["فكرة المشروع",D.projectIdea],["الشكل المقترح",D.format||"غير محدد"]];body=`<dl class="ca-sum ca-fields">${rows.map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1]||"—")}</dd>`).join("")}</dl><div class="ca-warning" style="margin-top:16px"><strong>تذكير:</strong> التسجيل لا يعني إرسال الفيديو. بعد إنجاز العمل، أرسله عبر ${esc(CA_CONFIG.instagramHandle)} قبل 01 ديسمبر 2026.</div>`}reg.innerHTML=`<div class="ca-prog" role="progressbar" aria-valuemin="1" aria-valuemax="${STEPS.length}" aria-valuenow="${step+1}"><i style="width:${((step+1)/STEPS.length)*100}%"></i></div><div class="ca-steps">${STEPS.map((_,i)=>`<span class="${i<step?"ok":i===step?"on":""}">${i<step?"✓":i+1}</span>`).join("")}<h4>${s.t}</h4></div><form id="ca-form" novalidate>${body}<div class="ca-nav">${step?'<button type="button" class="ca-btn ghost" data-prev>رجوع</button>':''}<button type="${s.sum?"submit":"button"}" class="ca-btn gold" ${s.sum?'id="ca-send"':'data-next'}>${s.sum?"تأكيد وإرسال التسجيل":"التالي"}</button></div></form>`;store.set(K,JSON.stringify({D,step}))}
-function check(n){const v=(D[n]||"").trim(),m=VALID[n]?VALID[n](v):"",i=$("#f-"+n),e=$("#e-"+n);if(e)e.textContent=m;if(i)i.classList.toggle("bad",!!m);return!m}function validStep(){const s=STEPS[step];let ok=true,first=null;(s.f||[]).forEach(n=>{if(VALID[n]&&!check(n)){ok=false;first=first||$("#f-"+n)}});if(s.rules&&!D.consent){ok=false;$("#e-consent").textContent="يجب الموافقة على الشروط للمتابعة."}if(first)first.focus();return ok}
-function regEvents(){const reg=$("#ca-reg");reg.addEventListener("input",e=>{const t=e.target,n=t.name;if(t.id==="ca-consent"){D.consent=t.checked;store.set(K,JSON.stringify({D,step}));return}if(!n)return;if(n==="phone")t.value=t.value.replace(/\D/g,"");D[n]=t.value;if(t.classList.contains("bad"))check(n);store.set(K,JSON.stringify({D,step}))});reg.addEventListener("change",e=>{if(e.target.tagName==="SELECT"){D[e.target.name]=e.target.value;check(e.target.name);store.set(K,JSON.stringify({D,step}))}});reg.addEventListener("click",e=>{if(e.target.closest("[data-next]")){if(validStep()){step++;renderReg();go("ca-register")}}if(e.target.closest("[data-prev]")){step--;renderReg();go("ca-register")}});reg.addEventListener("submit",async e=>{e.preventDefault();if(sending)return;if(store.get(DONE))return toast("سبق أن أرسلت تسجيلك من هذا الجهاز.");if(Date.now()<new Date(CA_CONFIG.registrationOpen).getTime())return toast("التسجيل لم يفتح بعد.");if(Date.now()>new Date(CA_CONFIG.registrationClose).getTime())return toast("انتهت فترة التسجيل.");sending=true;const b=$("#ca-send");b.disabled=true;b.textContent="جارٍ الإرسال…";const payload={type:"creator_awards_registration",...D,status:"pending",submittedAt:new Date().toISOString(),registrationSource:"UM1945 Creator Awards 2026"};try{await fetch(CA_CONFIG.scriptUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});store.set(DONE,"1");store.del(K);reg.innerHTML='<div class="ca-ok" role="status"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42"/><path d="M30 52l14 14 27-30"/></svg><h4 style="font:700 26px Reem Kufi">تم تسجيل مشاركتك ✓</h4><p style="color:var(--mu)">تم إرسال بيانات التسجيل إلى منظمي المسابقة. تذكّر: الفيديو لا يُرفع هنا؛ أرسله لاحقًا عبر @fnea_guelma قبل 01 ديسمبر 2026.</p></div>'}catch(err){sending=false;b.disabled=false;b.textContent="تأكيد وإرسال التسجيل";toast("تعذر إرسال التسجيل. تحقق من الاتصال وأعد المحاولة.")}})}
-function reveal(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("in")}),{threshold:.08});$("#ca")&&$$('.ca-rv').forEach(e=>io.observe(e))}
-function init(){build();try{const d=JSON.parse(store.get(K)||"null");if(d&&d.D){D=d.D;step=Math.min(d.step||0,STEPS.length-1)}}catch(e){}if(store.get(DONE))$("#ca-reg").innerHTML='<div class="ca-ok"><h4 style="font:700 24px Reem Kufi">سبق أن أرسلت تسجيلك ✓</h4><p style="color:var(--mu)">إذا كنت تريد التأكد من وصول البيانات، تواصل مع المنظمين.</p></div>';else{renderReg();regEvents()}countdown();hero();reveal();ca.addEventListener("click",e=>{const a=e.target.closest("[data-acc]");if(a){const p=a.parentNode,o=p.classList.toggle("open");a.setAttribute("aria-expanded",o)}const g=e.target.closest("[data-go]");if(g)go(g.dataset.go);if(e.target.closest("#ca-top"))scrollTo({top:0,behavior:reduce?"auto":"smooth"})});const top=$("#ca-top");addEventListener("scroll",()=>top.classList.toggle("show",scrollY>700),{passive:true})}
-function route(){const on=location.hash==="#creator-awards";if(on&&!ca.dataset.ready){ca.dataset.ready="1";init()}ca.hidden=!on;joinView.hidden=on;document.body.classList.toggle("ca-on",on);$$('.tabs a').forEach(a=>{const active=a.getAttribute("href")===(on?"#creator-awards":"#join");active?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});if(on)scrollTo(0,0)}addEventListener("hashchange",route);route();
-})();
+/* ===== تبويبات التنقل: تتبع هوية الموقع الحالية (البنفسجي) — كما كانت ===== */
+.tabs{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:8px;padding:10px 16px;background:#110b22d9;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs a{padding:8px 18px;border-radius:999px;color:var(--lilac);text-decoration:none;font:600 15px "Reem Kufi",serif;border:1px solid transparent;transition:background .2s,color .2s}
+.tabs a:hover{border-color:var(--line)}
+.tabs a[aria-current]{background:var(--violet);color:#fff}
+.tabs a:focus-visible{outline:2px solid var(--lilac);outline-offset:2px}
+body.ca-on{background:#060807}
+body.ca-on .glow{display:none}
+html.ca-on{scroll-padding-top:calc(var(--tabs-h,62px) + var(--nav-h,50px) + 10px)}
+
+/* ===== هوية المسابقة: أسود / أخضر عميق / ذهبي ===== */
+#ca{--bg:#060807;--bg2:#0b1511;--gr:#0e3b2c;--gr2:#17694a;--au:#d4af37;--au2:#f0d78a;--tx:#f3efe3;--mu:#9fb3a8;--ln:#2a3a31;position:relative;z-index:1;color:var(--tx);overflow-x:hidden;overflow-x:clip}
+#ca[hidden]{display:none}
+#ca *{box-sizing:border-box}
+#ca button{height:auto;border:0;border-radius:0;background:none;box-shadow:none;color:inherit;font:inherit;cursor:pointer;text-align:inherit;transform:none}
+#ca button:hover{transform:none}
+#ca :focus-visible{outline:2px solid var(--au);outline-offset:3px}
+#ca h3,#ca h4,#ca p,#ca ul,#ca ol{margin:0}
+#ca ul,#ca ol{padding:0;list-style:none}
+.ca-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ca-wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+.ca-sec{padding:72px 0 8px}
+.ca-sec h3{font:700 clamp(26px,5vw,38px)/1.25 "Reem Kufi",serif;margin-bottom:10px}
+.ca-lead{color:var(--mu);max-width:62ch;margin-bottom:26px}
+
+/* ظهور عند التمرير (animation مع backwards حتى لا يتعارض مع hover) */
+.ca-rv{opacity:0}
+.ca-rv.in{opacity:1;animation:caUp .7s var(--d,0s) backwards}
+@keyframes caUp{from{opacity:0;transform:translateY(22px)}}
+
+/* ===== Hero ===== */
+.ca-hero{position:relative;min-height:calc(100svh - 56px);display:grid;place-items:center;text-align:center;padding:64px 20px 80px;background:radial-gradient(120% 80% at 50% 0,var(--gr) 0,var(--bg) 62%);overflow:hidden;--mx:0;--my:0}
+.ca-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ca-orb{position:absolute;width:min(70vw,520px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#d4af3730,transparent 65%);top:50%;left:50%;transform:translate(calc(-50% + var(--mx)*30px),calc(-50% + var(--my)*30px));transition:transform .25s ease-out;pointer-events:none}
+.ca-vf{position:absolute;inset:clamp(12px,3vw,32px);pointer-events:none;--c:#d4af3788;background:
+ linear-gradient(var(--c),var(--c)) top left/26px 1.5px no-repeat,linear-gradient(var(--c),var(--c)) top left/1.5px 26px no-repeat,
+ linear-gradient(var(--c),var(--c)) top right/26px 1.5px no-repeat,linear-gradient(var(--c),var(--c)) top right/1.5px 26px no-repeat,
+ linear-gradient(var(--c),var(--c)) bottom left/26px 1.5px no-repeat,linear-gradient(var(--c),var(--c)) bottom left/1.5px 26px no-repeat,
+ linear-gradient(var(--c),var(--c)) bottom right/26px 1.5px no-repeat,linear-gradient(var(--c),var(--c)) bottom right/1.5px 26px no-repeat}
+.ca-hero-in{position:relative;display:grid;gap:14px;justify-items:center;max-width:780px}
+.ca-eyebrow{color:var(--au2);font-size:14px;border:1px solid var(--ln);border-radius:999px;padding:6px 16px;background:#0b151180}
+.ca-title{display:grid;line-height:1;margin:6px 0}
+.ca-title span{font:500 clamp(22px,5vw,34px) "Reem Kufi",serif;letter-spacing:.5em;color:var(--mu);padding-inline-start:.5em}
+.ca-title b{font:700 clamp(40px,11vw,92px) "Reem Kufi",serif;letter-spacing:.04em;background:linear-gradient(100deg,#a9831c 0,var(--au2) 40%,var(--au) 60%,#a9831c 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:caShine 7s linear infinite}
+@keyframes caShine{to{background-position:-220% 0}}
+.ca-sub{font:600 clamp(24px,5vw,36px) "Reem Kufi",serif}
+.ca-desc{color:var(--mu);max-width:58ch;font-size:17px}
+.ca-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ca-badges li{padding:8px 16px;border:1px solid var(--ln);border-radius:999px;background:#0b1511b3;backdrop-filter:blur(6px);font-weight:600;font-size:15px}
+.ca-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+#ca .ca-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:14px;font:700 18px "Reem Kufi",serif;text-align:center;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,background .2s}
+#ca .ca-btn.gold{background:linear-gradient(135deg,var(--au2),var(--au));color:#1a1405;box-shadow:0 14px 34px -12px #d4af37}
+#ca .ca-btn.ghost{border:1px solid var(--au);color:var(--au2)}
+#ca .ca-btn.sm{min-height:42px;padding:0 16px;font-size:15px;border-radius:11px}
+#ca .ca-btn:hover{transform:translateY(-2px)}
+#ca .ca-btn:disabled{opacity:.55;cursor:wait;transform:none}
+#ca .ca-scroll{position:absolute;bottom:22px;left:50%;margin-left:-14px;width:28px;height:46px;border:1.5px solid var(--au);border-radius:16px;opacity:.8}
+.ca-scroll::after{content:"";position:absolute;top:8px;left:50%;width:4px;height:8px;margin-left:-2px;border-radius:4px;background:var(--au2);animation:caDot 1.8s ease-in-out infinite}
+@keyframes caDot{60%{transform:translateY(16px);opacity:0}}
+
+/* ===== شريط التنقل الداخلي ===== */
+.ca-nav2{position:sticky;top:var(--tabs-h,62px);z-index:19;display:flex;gap:6px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;background:#060807e8;backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.ca-nav2::-webkit-scrollbar{display:none}
+.ca-nav2 a{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid transparent;color:var(--mu);text-decoration:none;font-size:14px;white-space:nowrap;transition:color .2s,border-color .2s}
+.ca-nav2 a:hover{color:var(--au2);border-color:var(--ln)}
+.ca-nav2 a[aria-current]{color:var(--au2);border-color:var(--au)}
+.ca-nav2 a.reg{margin-inline-start:auto;background:var(--au);color:#1a1405;font-weight:700}
+
+/* ===== الحالة المباشرة ===== */
+.ca-status{padding-top:48px}
+.ca-st{padding:24px 20px;border:1px solid var(--ln);border-radius:26px;background:linear-gradient(160deg,var(--bg2),#080d0b);text-align:center;display:grid;justify-items:center;gap:6px}
+.ca-st-top{display:flex;align-items:center;gap:14px;text-align:start}
+.ca-pulse{width:14px;height:14px;flex:none;border-radius:50%;background:var(--au)}
+.ca-pulse.live{background:#ff5a5a;animation:caPulse 1.6s infinite}
+@keyframes caPulse{0%{box-shadow:0 0 0 0 #ff5a5a88}100%{box-shadow:0 0 0 14px #ff5a5a00}}
+.ca-st-label{font:700 clamp(22px,4.8vw,34px)/1.3 "Reem Kufi",serif}
+.ca-st-sub{color:var(--mu)}
+.ca-count-lbl{color:var(--mu);font-size:14px;margin-top:14px}
+.ca-count{display:flex;gap:10px;margin-top:4px;justify-content:center}
+.ca-count[hidden],.ca-count-lbl[hidden]{display:none}
+.ca-count div{min-width:70px;padding:10px 6px;border:1px solid var(--ln);border-radius:14px;background:#0b1511b3}
+.ca-count b{display:block;font:700 clamp(26px,7vw,38px)/1.1 "Reem Kufi",serif;color:var(--au2);font-variant-numeric:tabular-nums}
+.ca-count small{color:var(--mu);font-size:12px}
+.ca-pg{width:100%;max-width:520px;height:8px;margin-top:18px;border-radius:8px;background:#16241d;overflow:hidden}
+.ca-pg i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--gr2),var(--au));transition:width 1s}
+.ca-pg-ends{display:flex;justify-content:space-between;width:100%;max-width:520px;color:var(--mu);font-size:12px}
+.ca-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.ca-stats li{padding:16px 10px;border:1px solid var(--ln);border-radius:16px;text-align:center;background:var(--bg2)}
+.ca-stats b{display:block;font:700 38px/1.1 "Reem Kufi",serif;color:var(--au2);font-variant-numeric:tabular-nums}
+.ca-stats span{color:var(--mu);font-size:14px}
+
+/* ===== لماذا ===== */
+.ca-why{text-align:center;padding:96px 0 24px}
+.ca-why h3{font:700 clamp(28px,6vw,52px)/1.35 "Reem Kufi",serif;max-width:20ch;margin:0 auto 22px}
+.ca-why-t{font-size:clamp(17px,3vw,22px);line-height:2;color:var(--mu);max-width:36em;margin:0 auto 14px}
+.ca-why-t.gold{color:var(--au2);font-weight:600}
+
+/* ===== بطاقات عامة ===== */
+.ca-grid{display:grid;gap:14px}
+.ca-auto{grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.ca-card{padding:20px;border:1px solid var(--ln);border-radius:18px;background:linear-gradient(160deg,var(--bg2),#080d0b);transition:transform .3s,border-color .3s}
+.ca-card:hover{transform:translateY(-4px);border-color:#d4af3788}
+.ca-card em{font-style:normal;font-size:30px;display:block;margin-bottom:6px}
+.ca-card h4{font:700 20px "Reem Kufi",serif}
+.ca-card p{color:var(--mu);font-size:15px}
+.ca-box{margin-top:18px;padding:16px 20px;border-radius:16px;border:1px solid #d4af3766;background:#d4af3710;color:var(--tx)}
+.ca-box p+p{color:var(--mu)}
+.ca-warn{margin-top:18px;padding:14px 18px;border-radius:14px;border:1px dashed var(--au);background:#d4af3712;color:var(--au2);font-weight:600}
+.ca-warn.strong{font:700 20px "Reem Kufi",serif;text-align:center;margin-top:22px}
+
+/* ===== الخط الزمني ===== */
+.ca-tl{position:relative;max-width:720px;--fill:0px}
+.ca-tl::before{content:"";position:absolute;inset-inline-start:19px;top:20px;bottom:20px;width:2px;background:var(--ln)}
+.ca-tl::after{content:"";position:absolute;inset-inline-start:19px;top:20px;width:2px;height:0;background:linear-gradient(var(--gr2),var(--au));transition:height 1.6s cubic-bezier(.2,.8,.2,1)}
+.ca-tl.in::after{height:var(--fill)}
+.ca-tl li{position:relative;padding-inline-start:64px;padding-bottom:18px}
+.ca-td{position:absolute;inset-inline-start:0;top:0;z-index:1;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--bg);border:2px solid var(--ln);font-size:18px;filter:grayscale(1);opacity:.7;transition:all .4s}
+.ca-tc{padding:12px 16px;border:1px solid var(--ln);border-radius:16px;background:var(--bg2);transition:border-color .3s,transform .3s}
+.ca-tl li:hover .ca-tc{transform:translateX(-4px);border-color:#d4af3788}
+.ca-tc time{color:var(--au2);font:700 15px "Reem Kufi",serif}
+.ca-tc h4{font:600 18px "IBM Plex Sans Arabic",sans-serif}
+.ca-tc p{color:var(--mu);font-size:14px}
+.ca-tb{float:inline-end;font:600 12px "IBM Plex Sans Arabic";color:var(--mu)}
+.ca-tb:empty{display:none}
+.ca-tl li[data-state=done] .ca-td{background:var(--gr2);border-color:var(--gr2);filter:none;opacity:1}
+.ca-tl li[data-state=done] .ca-tc{opacity:.75}
+.ca-tl li[data-state=done] .ca-tb{color:#7be0b0}
+.ca-tl li[data-state=active] .ca-td{border-color:var(--au);filter:none;opacity:1;box-shadow:0 0 0 6px #d4af3726;animation:caGlow 2s infinite}
+.ca-tl li[data-state=active] .ca-tc{border-color:var(--au);background:linear-gradient(160deg,#10281f,var(--bg2))}
+.ca-tl li[data-state=active] .ca-tb{color:var(--au2)}
+.ca-tl li[data-state=next] .ca-td{border-color:var(--au);filter:none;opacity:1}
+.ca-tl li[data-state=next] .ca-tb{color:var(--au2)}
+@keyframes caGlow{50%{box-shadow:0 0 0 12px #d4af3700}}
+
+/* ===== الدورة التكوينية ===== */
+.ca-train{display:grid;gap:22px;padding:26px 22px;border:1px solid #d4af3766;border-radius:28px;background:radial-gradient(120% 100% at 100% 0,#123f2f 0,var(--bg2) 60%)}
+.ca-tdate{display:grid;justify-items:center;align-content:center;padding:14px 24px;border-radius:22px;background:#050907;border:1px solid var(--au);justify-self:start}
+.ca-tdate b{font:700 clamp(64px,16vw,104px)/1 "Reem Kufi",serif;color:var(--au2)}
+.ca-tdate span{font:600 22px "Reem Kufi",serif}
+.ca-tbody h3{margin-bottom:8px}
+.ca-tag{display:inline-block;margin-bottom:12px;padding:4px 14px;border-radius:999px;background:var(--au);color:#1a1405;font-weight:700;font-size:14px}
+.ca-ws{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.ca-ws li{display:flex;align-items:center;gap:10px;padding:14px;border:1px solid var(--ln);border-radius:14px;background:#050907;font-weight:600}
+.ca-ws em{font-style:normal;font-size:24px}
+.ca-sub2{font:700 22px "Reem Kufi",serif;margin:34px 0 14px}
+.ca-club{text-align:center}
+.ca-logo{display:grid;place-items:center;width:100%;height:96px;margin-bottom:12px;border-radius:14px;background:#050907;border:1px solid var(--ln)}
+.ca-logo img{max-width:80%;max-height:80%;object-fit:contain}
+.ca-logo.ph{border:1.5px dashed #d4af3766}
+.ca-logo.ph span{color:var(--mu);font-size:13px}
+
+/* ===== رحلة المشاركة ===== */
+.ca-jny{position:relative;padding:22px 16px;border:1px solid var(--ln);border-radius:24px;background:linear-gradient(160deg,var(--bg2),#080d0b)}
+.ca-jtrack{position:absolute;top:44px;inset-inline:calc(16px + 12.5%);height:3px;border-radius:3px;background:var(--ln)}
+.ca-jtrack i{display:block;height:100%;width:calc(var(--jp) * 100%);border-radius:3px;background:linear-gradient(90deg,var(--gr2),var(--au));transition:width .6s ease}
+.ca-jtabs{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+#ca .ca-jtabs button{display:grid;justify-items:center;gap:8px;padding:4px 2px;text-align:center;border-radius:12px}
+.ca-jn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--bg);border:2px solid var(--ln);font:700 15px "Reem Kufi";color:var(--mu);transition:all .3s}
+.ca-jl{font-size:13px;line-height:1.4;color:var(--mu)}
+.ca-jtabs button.done .ca-jn{background:var(--gr2);border-color:var(--gr2);color:#fff}
+.ca-jtabs button[aria-selected=true] .ca-jn{border-color:var(--au);color:var(--au2);box-shadow:0 0 0 6px #d4af3722}
+.ca-jtabs button[aria-selected=true] .ca-jl{color:var(--tx);font-weight:600}
+.ca-jpanel{margin-top:20px;padding:18px;border-radius:16px;background:#050907;border:1px solid var(--ln);min-height:112px}
+.ca-jpanel h4{font:700 20px "Reem Kufi",serif;color:var(--au2);margin-bottom:6px}
+.ca-jpanel p{color:var(--mu)}
+
+/* ===== Accordion ===== */
+.ca-list{display:grid;gap:10px}
+.ca-acc{border:1px solid var(--ln);border-radius:16px;background:var(--bg2);overflow:hidden;transition:border-color .3s}
+.ca-acc.open{border-color:var(--au)}
+.ca-acch{font:inherit}
+#ca .ca-acc button{width:100%;display:flex;align-items:center;gap:14px;padding:14px 18px;min-height:56px;font:600 17px "IBM Plex Sans Arabic",sans-serif}
+.ca-acc button i{margin-inline-start:auto;color:var(--au);font-style:normal;font-size:22px;transition:transform .3s}
+.ca-acc.open button i{transform:rotate(45deg)}
+.ca-n{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--au);color:var(--au2);font:700 14px "Reem Kufi"}
+.ca-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.ca-acc.open .ca-more{grid-template-rows:1fr}
+.ca-more>div{overflow:hidden;min-height:0;color:var(--mu);padding:0 18px}
+.ca-acc.open .ca-more>div{padding-bottom:16px}
+
+/* ===== إرسال العمل عبر Instagram ===== */
+.ca-ig{text-align:center;display:grid;justify-items:center;gap:8px;padding:34px 20px;border-radius:28px;border:1px solid var(--au);background:radial-gradient(100% 120% at 50% 0,#14412f 0,var(--bg2) 70%);box-shadow:0 0 60px -26px var(--au)}
+.ca-ig h3{margin:0}
+.ca-ig>p{color:var(--mu)}
+.ca-ig-h{font:700 clamp(30px,8vw,52px)/1.2 "Reem Kufi",serif!important;color:var(--au2)!important;margin:8px 0}
+.ca-ig-d{color:var(--tx)!important;font-size:18px}
+.ca-ig-d b{color:var(--au2)}
+
+/* ===== أفضل 08 ===== */
+.ca-fin{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.ca-fc{position:relative;padding:14px 14px 18px;border:1px solid var(--ln);border-radius:18px;background:linear-gradient(160deg,var(--bg2),#080d0b);display:grid;gap:6px;align-content:start;transition:transform .3s,border-color .3s}
+.ca-fc:not(.soon):hover{transform:translateY(-4px);border-color:#d4af3788}
+.ca-rank{position:absolute;top:10px;inset-inline-start:14px;z-index:1;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--au);color:#1a1405;font:700 16px "Reem Kufi"}
+.ca-thumb{aspect-ratio:16/10;border-radius:12px;background:#050907;overflow:hidden}
+.ca-thumb img{width:100%;height:100%;object-fit:cover}
+.ca-fc.soon .ca-thumb{background:linear-gradient(100deg,#0b1511 30%,#14241c 50%,#0b1511 70%) 0 0/220% 100%;animation:caShim 2.4s linear infinite}
+@keyframes caShim{to{background-position:-220% 0}}
+.ca-fc h4{font:700 18px "Reem Kufi",serif}
+.ca-fc p{color:var(--mu);font-size:14px}
+.ca-fc.soon h4{color:var(--mu)}
+.ca-fc .ca-by{color:var(--au2);font-weight:600}
+.ca-fa{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+
+/* ===== لجنة التحكيم ===== */
+.ca-jm{text-align:center}
+.ca-av{display:grid;place-items:center;width:96px;height:96px;margin:0 auto 12px;border-radius:50%;overflow:hidden;background:#050907;border:1px solid var(--au);font-size:36px}
+.ca-av img{width:100%;height:100%;object-fit:cover}
+.ca-role{color:var(--au2)!important}
+.ca-jph{display:grid;justify-items:center;gap:16px;padding:36px 20px;border:1.5px dashed #d4af3755;border-radius:24px;text-align:center;color:var(--mu);font-size:18px}
+.ca-avs{display:flex;gap:12px}
+.ca-avs i{width:60px;height:60px;border-radius:50%;background:#0b1511;border:1px solid var(--ln)}
+
+/* ===== الحفل الختامي ===== */
+.ca-finale{margin-top:72px;padding:90px 0 80px;text-align:center;background:radial-gradient(90% 70% at 50% 0,#14412f 0,var(--bg) 70%);border-block:1px solid var(--ln)}
+.ca-fin-en{font:700 clamp(30px,8vw,72px)/1.1 "Reem Kufi",serif;letter-spacing:.08em;background:linear-gradient(100deg,#a9831c,var(--au2),#a9831c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ca-fin-ar{font:700 clamp(22px,4.5vw,34px) "Reem Kufi",serif;margin:8px 0}
+.ca-fin-date{display:inline-block;margin:8px 0 14px;padding:6px 22px;border:1px solid var(--au);border-radius:999px;color:var(--au2);font:700 20px "Reem Kufi"}
+.ca-pods{display:grid;gap:14px;margin-top:34px;align-items:end}
+.ca-pod{padding:26px 16px;border:1px solid var(--ln);border-radius:22px;background:linear-gradient(160deg,var(--bg2),#080d0b);opacity:0;display:grid;gap:6px;justify-items:center}
+.ca-pod em{font-style:normal;font-size:44px}
+.ca-pod h4{font:700 22px "Reem Kufi",serif}
+.ca-pod p{color:var(--mu)}
+.ca-pod .ca-wn{color:var(--tx);font-weight:700;font-size:18px}
+.ca-pod .ca-wn.dim{color:var(--mu);font-weight:500;font-size:15px}
+.ca-pod .ca-pz{color:var(--au2)}
+.ca-pod.p1{border-color:var(--au);padding-block:40px}
+.ca-podium.in .ca-pod{animation:caRise .9s cubic-bezier(.2,.8,.2,1) both}
+.ca-podium.in .p3{animation-delay:.1s}.ca-podium.in .p2{animation-delay:.45s}
+.ca-podium.in .p1{animation:caRise 1s 1s cubic-bezier(.2,.8,.2,1) both,caBurst 1.6s 1.6s ease-out 1}
+@keyframes caRise{from{opacity:0;transform:translateY(46px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes caBurst{0%{box-shadow:0 0 0 0 #d4af3788}100%{box-shadow:0 0 0 40px #d4af3700}}
+.ca-note{margin-top:22px;color:var(--au2);font-size:18px;text-align:center}
+
+/* ===== CTA نهائي + تذييل ===== */
+.ca-final{margin-top:70px;padding:80px 20px;text-align:center;background:radial-gradient(100% 120% at 50% 100%,var(--gr) 0,var(--bg) 70%);border-top:1px solid var(--ln)}
+.ca-final h3{font:700 clamp(32px,7vw,56px)/1.2 "Reem Kufi",serif}
+.ca-final p{color:var(--au2);margin:8px 0 24px;font-size:19px}
+.ca-foot{margin-top:80px;padding:44px 0 36px;text-align:center;border-top:1px solid var(--ln);background:#040605;color:var(--mu)}
+.ca-foot .logo{margin:0 auto 10px}
+.ca-foot-t{font:700 20px "Reem Kufi",serif;letter-spacing:.12em;color:var(--au2)}
+.ca-foot a{color:var(--au2);text-underline-offset:3px}
+.ca-foot small{display:block;margin-top:14px;font-size:13px}
+
+/* ===== التسجيل ===== */
+.ca-reg{border:1px solid var(--ln);border-radius:22px;padding:22px 18px;background:linear-gradient(160deg,var(--bg2),#080d0b)}
+.ca-prog{height:6px;border-radius:6px;background:#16241d;overflow:hidden;margin-bottom:14px}
+.ca-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gr2),var(--au));transition:width .4s}
+.ca-steps{display:flex;gap:8px;margin-bottom:18px;align-items:center}
+.ca-steps span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid var(--ln);color:var(--mu);font:600 13px "Reem Kufi";flex:none}
+.ca-steps span.on{border-color:var(--au);color:var(--au2)}
+.ca-steps span.ok{background:var(--gr2);border-color:var(--gr2);color:#fff}
+.ca-steps h4{font:700 19px "Reem Kufi",serif;margin-inline-start:6px}
+.ca-fields{display:grid;gap:14px;animation:caIn .4s}
+@keyframes caIn{from{opacity:0;transform:translateX(-14px)}}
+#ca .f{display:grid;gap:6px;color:var(--au2);font-size:14px}
+#ca input:not([type=checkbox]),#ca select,#ca textarea{width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--ln);background:#050907;color:var(--tx);font:inherit}
+#ca input[readonly]{color:var(--mu)}
+#ca textarea{resize:vertical}
+#ca input:focus-visible,#ca select:focus-visible,#ca textarea:focus-visible{border-color:var(--au);box-shadow:0 0 0 4px #d4af3730;outline:none}
+#ca .bad{border-color:#ff8aa1}
+.ca-err{color:#ff8aa1;font-size:13px}
+.ca-err:empty{display:none}
+.ca-sum{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px;margin:0}
+.ca-sum dt{color:var(--mu)}.ca-sum dd{font-weight:600;overflow-wrap:anywhere;margin:0}
+.ca-consent{display:flex;gap:12px;align-items:flex-start;margin-top:12px;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;cursor:pointer}
+.ca-consent input{flex:none;width:22px;height:22px;margin:2px 0 0;accent-color:var(--au)}
+.ca-nav{display:flex;gap:10px;margin-top:20px}
+.ca-nav .ca-btn{flex:1}
+.ca-ok{text-align:center;padding:28px 8px;display:grid;gap:10px;justify-items:center}
+.ca-ok h4{font:700 24px "Reem Kufi",serif}.ca-ok p{color:var(--mu)}
+.ca-ico{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;border:2px solid var(--au);color:var(--au2);font-size:30px}
+
+/* ===== أدوات ===== */
+#ca .ca-top{position:fixed;bottom:18px;inset-inline-start:18px;width:46px;height:46px;border-radius:50%;background:var(--gr);border:1px solid var(--au);color:var(--au2);font-size:20px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:15}
+#ca .ca-top.show{opacity:1;pointer-events:auto}
+.ca-toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);background:#0e3b2c;border:1px solid var(--au);color:#fff;padding:12px 20px;border-radius:12px;opacity:0;transition:.35s;z-index:30;max-width:90vw;text-align:center;pointer-events:none}
+.ca-toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:760px){
+  .ca-stats{grid-template-columns:repeat(4,1fr)}
+  .ca-train{grid-template-columns:auto 1fr;align-items:center;padding:34px}
+  .ca-pods{grid-template-columns:repeat(3,1fr)}
+  .ca-pod.p2{order:1}.ca-pod.p1{order:2}.ca-pod.p3{order:3}
+  .ca-fields.two{grid-template-columns:1fr 1fr}.ca-fields .wide{grid-column:1/-1}
+  .ca-reg{padding:30px}
+  .ca-jl{font-size:15px}
+}
+@media(max-width:759px){.ca-fx{opacity:.7}.ca-steps h4{font-size:16px}.ca-jn{width:38px;height:38px}.ca-jtrack{top:41px}}
+@media(prefers-reduced-motion:reduce){
+  .ca-rv{opacity:1}
+  .ca-pod{opacity:1}
+  html.ca-on{scroll-behavior:auto}
+  #ca *,#ca *::before,#ca *::after{animation:none!important;transition:none!important}
+}
